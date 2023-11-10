@@ -1,5 +1,4 @@
 import subprocess
-import jinja2
 
 locations = [
     "../server/app/net",
