@@ -1,0 +1,37 @@
+// Run generate_packets.py in a virtual environment with protobuf installed to regenerate the packet files
+
+syntax = "proto3";
+package app.net.packets;
+
+message LoginPacket {
+    string username = 1;
+    string password = 2;
+}
+
+message RegisterPacket {
+    string username = 1;
+    string password = 2;
+}
+
+message ChatPacket {
+    string name = 1;
+    string message = 2;
+}
+
+message DenyPacket {
+    string reason = 1;
+}
+
+message OkPacket {
+    string reason = 1;
+}
+
+message Packet {
+    oneof type {
+        LoginPacket login = 1;
+        RegisterPacket register = 2;
+        ChatPacket chat = 3;
+        DenyPacket deny = 4;
+        OkPacket ok = 5;
+    }
+}

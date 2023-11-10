@@ -1,0 +1,16 @@
+# DO NOT EDIT
+# This file is auto-generated. Any changes will be overwritten.
+# Regenerate the file by running the generate_packets.py file.
+
+from .packets_pb2 import LoginPacket, ChatPacket, RegisterPacket, Packet, DenyPacket, OkPacket
+
+{% for packet in packets %}
+def create_{{ packet.name|lower }}_packet({% if packet.fields %}{{ packet.fields|join(', ') }}{% endif %}):
+    {{ packet.name|lower }}_packet = {{ packet.name }}Packet()
+    {% for field in packet.field_list %}
+    {{ packet.name|lower }}_packet.{{ field.name }} = {{ field.name }}
+    {% endfor %}
+    packet = Packet()
+    packet.{{ packet.name|lower }}.CopyFrom({{ packet.name|lower }}_packet)
+    return packet
+{% endfor %}
