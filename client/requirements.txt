@@ -1,0 +1,4 @@
+mypy-protobuf==3.5.0
+protobuf==4.25.0
+pygame==2.5.2
+types-protobuf==4.24.0.4
