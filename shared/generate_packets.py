@@ -2,7 +2,8 @@ import subprocess
 
 locations = [
     "../server/app/net",
-    "../tests.client.mock/tests/packets"
+    "../tests.client.mock/tests/packets",
+    "../client/app/net/packets"
 ]
 
 def run_shell_commands():
