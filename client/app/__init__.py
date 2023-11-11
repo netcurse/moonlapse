@@ -18,6 +18,8 @@ class App:
         # Ensure initialization happens only once
         if not hasattr(self, '_initialized'):
             pygame.init()
+            icon = pygame.image.load('app/assets/img/favicon.png') 
+            pygame.display.set_icon(icon)
             self.screen = pygame.display.set_mode((800, 600))
             pygame.display.set_caption("Moonlapse")
             self.running = True

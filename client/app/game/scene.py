@@ -34,7 +34,7 @@ def entry_scene():
     scene = Scene("Entry")
     scene.objects.append(EntrySceneManager(scene))
     gui_controller = GuiController()
-    scene.gui_controls.append(Text("Hello World!", (20, 20), gui_controller))
+    scene.gui_controls.append(Text("Moonlapse: Press [R] to register, [L] to login", (20, 20), gui_controller))
     return scene
 
 def game_scene():
