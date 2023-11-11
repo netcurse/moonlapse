@@ -61,7 +61,7 @@ class Protocol:
 
                 return message_bytes
         except (trio.TooSlowError):
-            self.logger.warning(f"Timeout while reading message")
+            self.logger.warning(f"Timeout while reading message. Received {len(message_bytes)} bytes: {message_bytes}")
             return None
         except (ValueError) as exc:
             self.logger.warning(f"Error reading message: {exc}")

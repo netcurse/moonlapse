@@ -15,7 +15,7 @@ class GameObject:
         """Called every frame"""
         pass
 
-    def draw(self):
+    def draw(self, screen):
         """Called every frame"""
         pass
 

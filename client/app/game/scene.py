@@ -1,5 +1,6 @@
 
 
+from app.game.gameobjects.scene_managers import EntrySceneManager
 from app.ui.gui_controller import GuiController
 from app.ui.gui_controls import GuiControl, Text
 
@@ -33,6 +34,7 @@ class Scene:
 
 def entry_scene():
     scene = Scene("Entry")
+    scene.objects.append(EntrySceneManager(scene))
     gui_controller = GuiController()
     scene.gui_controls.append(Text("Hello World!", (20, 20), gui_controller))
     return scene

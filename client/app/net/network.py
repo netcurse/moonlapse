@@ -4,16 +4,26 @@ from typing import List
 from .packets import Packet
 
 class NetworkManager:
+    _instance = None  # private class attribute to hold the singleton instance
+
+    def __new__(cls, *args, **kwargs):
+        """ensure only one instance is created."""
+        if cls._instance is None:
+            cls._instance = super(NetworkManager, cls).__new__(cls)
+        return cls._instance
+    
     def __init__(self):
-        # todo: obviously change port and host
-        self.port = 42523
-        self.host = 'localhost'
-        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # Ensure initialization happens only once
+        if not hasattr(self, '_initialized'):
+            # todo: obviously change port and host
+            self.port = 42523
+            self.host = 'localhost'
+            self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
-        self.incoming_packets: List[Packet] = []
-        self.outgoing_packets: List[Packet] = []
+            self.incoming_packets: List[Packet] = []
+            self.outgoing_packets: List[Packet] = []
 
-        self.running = False
+            self.running = False
 
     def start(self):
         self.socket.connect((self.host, self.port))
@@ -48,3 +58,13 @@ class NetworkManager:
         for packet in self.outgoing_packets:
             self.send(packet)
         self.outgoing_packets.clear()
+
+    @classmethod
+    def get_current_network_manager(cls):
+        """get the single instance of the network manager."""
+        if cls._instance is None:
+            cls._instance = cls()
+        return cls._instance
+    
+def get_current_network_manager():
+    return NetworkManager.get_current_network_manager()

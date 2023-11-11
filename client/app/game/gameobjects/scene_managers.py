@@ -1,5 +1,6 @@
 from .gameobject import GameObject
 from app.net.packets import create_login_packet
+from app.net.network import get_current_network_manager
 
 class EntrySceneManager(GameObject):
     def __init__(self, scene):
@@ -10,5 +11,17 @@ class EntrySceneManager(GameObject):
         username = "test"
         password = "test123"
         p = create_login_packet(username, password)
-        self.scene.game.network_manager.send_packet(p)
-        pass
+        get_current_network_manager().send_packet(p)
+
+    def update(self):
+        # process incoming packets (one packet per frame - TODO: fix this?)
+        if len(get_current_network_manager().incoming_packets) > 0:
+            packet = get_current_network_manager().incoming_packets.pop(0)
+            self.process_packet(packet)
+
+    def process_packet(self, packet):
+        if packet.HasField('ok'):
+            print("Login OK")
+            # self.scene.game.scene_manager.change_scene('game')
+        elif packet.HasField('deny'):
+            print("Login failed")
