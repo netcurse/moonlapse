@@ -1,5 +1,5 @@
 from .gameobject import GameObject
-from app.net.packets import create_login_packet, create_register_packet
+from app.net.packets import create_login_packet, create_register_packet, create_chat_packet
 from app.net.network import get_current_network_manager
 from app import get_current_app
 import pygame
@@ -30,6 +30,11 @@ class EntrySceneManager(GameObject):
             password = "test123"
             p = create_login_packet(username, password)
             get_current_network_manager().outgoing_packets.append(p)
+
+        if get_current_app().input_manager.key_just_pressed(pygame.K_c):
+            p = create_chat_packet("test_fake_user", "Hello, world!")
+            get_current_network_manager().outgoing_packets.append(p)
+        
 
     def process_packet(self, packet):
         if packet.HasField('ok'):
