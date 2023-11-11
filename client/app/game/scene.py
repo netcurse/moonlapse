@@ -1,5 +1,3 @@
-
-
 from app.game.gameobjects.scene_managers import EntrySceneManager
 from app.ui.gui_controller import GuiController
 from app.ui.gui_controls import GuiControl, Text

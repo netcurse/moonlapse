@@ -5,7 +5,6 @@ class GameObject:
         self.scene = scene
         self.x = x
         self.y = y
-        self.scene.objects.append(self)
 
     def init(self):
         """Called after the scene is loaded"""

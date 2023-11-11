@@ -2,7 +2,6 @@ import threading
 import pygame
 from pygame.locals import *
 from app.game.input_manager import InputManager
-from app.game.scene import Scene, entry_scene
 from app.net.network import NetworkManager
 from app.ui.gui_controls import Text
 
@@ -30,7 +29,11 @@ class App:
             self.network_thread = threading.Thread(target=self.network_manager.start, daemon=True)
             self.network_thread.start()
 
+            # TODO: lazily fixing circular dependency here
+            from app.game.scene import entry_scene
             self.scene = entry_scene()
+            self.scene.init()
+            print("App initialized")
 
     def run(self):
         """Main event loop."""
@@ -41,6 +44,8 @@ class App:
 
             self.screen.fill((0, 0, 0))  # clear the screen with black color
             self.scene.update()
+            self.network_manager.update()
+            self.input_manager.update()
             self.scene.draw(self.screen)
 
             pygame.display.update()

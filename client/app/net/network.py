@@ -24,7 +24,7 @@ class NetworkManager:
             self.incoming_packets: List[Packet] = []
             self.outgoing_packets: List[Packet] = []
 
-            self.heartbeat_thread = threading.Thread(target=self.heartbeat_loop)
+            self.heartbeat_thread = threading.Thread(target=self.heartbeat_loop, daemon=True)
 
             self.running = False
 
@@ -45,7 +45,7 @@ class NetworkManager:
             time.sleep(10.0)  # Wait for 10 seconds before sending the next heartbeat (5 seconds before timeout)
 
     def send_heartbeat(self):
-        self.send_packet(create_heartbeat_packet())
+        self.outgoing_packets.append(create_heartbeat_packet())
 
     def send_packet(self, packet):
         data = packet.SerializeToString()
@@ -67,13 +67,14 @@ class NetworkManager:
         return packet
 
     def update(self):
-        for packet in self.outgoing_packets:
-            self.send(packet)
-        self.outgoing_packets.clear()
+        # send outgoing packets (one packet per frame - TODO: fix this?)
+        if len(self.outgoing_packets) > 0:
+            packet = self.outgoing_packets.pop(0)
+            self.send_packet(packet)
+            print(f"Sent packet: {str(packet)}")
 
     def stop(self):
         self.running = False
-        self.heartbeat_thread.join()  # Wait for the heartbeat thread to finish
 
     @classmethod
     def get_current_network_manager(cls):
