@@ -99,6 +99,16 @@ class OkPacket(google.protobuf.message.Message):
 global___OkPacket = OkPacket
 
 @typing_extensions.final
+class HeartbeatPacket(google.protobuf.message.Message):
+    DESCRIPTOR: google.protobuf.descriptor.Descriptor
+
+    def __init__(
+        self,
+    ) -> None: ...
+
+global___HeartbeatPacket = HeartbeatPacket
+
+@typing_extensions.final
 class Packet(google.protobuf.message.Message):
     DESCRIPTOR: google.protobuf.descriptor.Descriptor
 
@@ -107,6 +117,7 @@ class Packet(google.protobuf.message.Message):
     CHAT_FIELD_NUMBER: builtins.int
     DENY_FIELD_NUMBER: builtins.int
     OK_FIELD_NUMBER: builtins.int
+    HEARTBEAT_FIELD_NUMBER: builtins.int
     @property
     def login(self) -> global___LoginPacket: ...
     @property
@@ -117,6 +128,8 @@ class Packet(google.protobuf.message.Message):
     def deny(self) -> global___DenyPacket: ...
     @property
     def ok(self) -> global___OkPacket: ...
+    @property
+    def heartbeat(self) -> global___HeartbeatPacket: ...
     def __init__(
         self,
         *,
@@ -125,9 +138,10 @@ class Packet(google.protobuf.message.Message):
         chat: global___ChatPacket | None = ...,
         deny: global___DenyPacket | None = ...,
         ok: global___OkPacket | None = ...,
+        heartbeat: global___HeartbeatPacket | None = ...,
     ) -> None: ...
-    def HasField(self, field_name: typing_extensions.Literal["chat", b"chat", "deny", b"deny", "login", b"login", "ok", b"ok", "register", b"register", "type", b"type"]) -> builtins.bool: ...
-    def ClearField(self, field_name: typing_extensions.Literal["chat", b"chat", "deny", b"deny", "login", b"login", "ok", b"ok", "register", b"register", "type", b"type"]) -> None: ...
-    def WhichOneof(self, oneof_group: typing_extensions.Literal["type", b"type"]) -> typing_extensions.Literal["login", "register", "chat", "deny", "ok"] | None: ...
+    def HasField(self, field_name: typing_extensions.Literal["chat", b"chat", "deny", b"deny", "heartbeat", b"heartbeat", "login", b"login", "ok", b"ok", "register", b"register", "type", b"type"]) -> builtins.bool: ...
+    def ClearField(self, field_name: typing_extensions.Literal["chat", b"chat", "deny", b"deny", "heartbeat", b"heartbeat", "login", b"login", "ok", b"ok", "register", b"register", "type", b"type"]) -> None: ...
+    def WhichOneof(self, oneof_group: typing_extensions.Literal["type", b"type"]) -> typing_extensions.Literal["login", "register", "chat", "deny", "ok", "heartbeat"] | None: ...
 
 global___Packet = Packet

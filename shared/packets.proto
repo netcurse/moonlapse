@@ -26,6 +26,9 @@ message OkPacket {
     string reason = 1;
 }
 
+message HeartbeatPacket {
+}
+
 message Packet {
     oneof type {
         LoginPacket login = 1;
@@ -33,5 +36,6 @@ message Packet {
         ChatPacket chat = 3;
         DenyPacket deny = 4;
         OkPacket ok = 5;
+        HeartbeatPacket heartbeat = 6;
     }
 }

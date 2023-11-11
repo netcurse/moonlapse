@@ -1,4 +1,4 @@
-from .packets_pb2 import LoginPacket, ChatPacket, RegisterPacket, Packet, DenyPacket, OkPacket
+from .packets_pb2 import LoginPacket, ChatPacket, RegisterPacket, Packet, DenyPacket, OkPacket, HeartbeatPacket
 
 def create_login_packet(user: str, password: str):
     login_packet = LoginPacket()
@@ -36,4 +36,10 @@ def create_ok_packet(reason: str):
     ok_packet.reason = reason
     packet = Packet()
     packet.ok.CopyFrom(ok_packet)
+    return packet
+
+def create_heartbeat_packet():
+    heartbeat_packet = HeartbeatPacket()
+    packet = Packet()
+    packet.heartbeat.CopyFrom(heartbeat_packet)
     return packet

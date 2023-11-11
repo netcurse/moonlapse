@@ -7,7 +7,7 @@ from app.server.logging_adapter import ProtocolLoggerAdapter
 import app.net as packets
 
 MAX_PACKET_SIZE = 1024 * 5  # 5 KiB
-READ_TIMEOUT = 5   # seconds
+READ_TIMEOUT = 10   # seconds
 
 class Protocol:
     def __init__(self, server_stream: trio.SocketStream, core):
@@ -30,7 +30,7 @@ class Protocol:
             while True:
                 data = await self.read_message(self.server_stream)
                 if data is None:
-                    break  # connection closed by the client
+                    break  # connection closed by the client, timeout, or error
                 await self.handle_message(data)
         except Exception as exc:
             self.logger.warning(f"crashed: {exc!r}")
@@ -38,6 +38,7 @@ class Protocol:
             self.logger.info(f"connection closed")
 
     async def read_message(self, stream):
+        message_bytes = b''
         try:
             with trio.fail_after(READ_TIMEOUT):  # timeout
                 length_bytes = await stream.receive_some(4)
@@ -88,6 +89,10 @@ class Protocol:
             await self.protostate.handle_register_packet(packet.register)
         elif packet.HasField("chat"):
             await self.protostate.handle_chat_packet(packet.chat)
+        elif packet.HasField("heartbeat"):
+            self.logger.info(f"received heartbeat packet")
+            # ignore heartbeat packets
+            pass
         else:
             # otherwise, log warning and ignore
             self.logger.warning(f"received unknown packet {packet!r}")
