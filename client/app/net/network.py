@@ -42,7 +42,7 @@ class NetworkManager:
     def heartbeat_loop(self):
         while self.running:
             self.send_heartbeat()
-            time.sleep(9.0)  # Wait for 9 seconds before sending the next heartbeat (1 second before timeout)
+            time.sleep(10.0)  # Wait for 10 seconds before sending the next heartbeat (5 seconds before timeout)
 
     def send_heartbeat(self):
         self.send_packet(create_heartbeat_packet())

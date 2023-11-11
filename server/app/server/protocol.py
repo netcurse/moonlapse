@@ -7,7 +7,7 @@ from app.server.logging_adapter import ProtocolLoggerAdapter
 import app.net as packets
 
 MAX_PACKET_SIZE = 1024 * 5  # 5 KiB
-READ_TIMEOUT = 10   # seconds
+READ_TIMEOUT = 15   # seconds
 
 class Protocol:
     def __init__(self, server_stream: trio.SocketStream, core):
